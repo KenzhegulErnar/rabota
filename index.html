@@ -297,6 +297,12 @@
   .game-emoji{font-size:5rem;line-height:1;filter:drop-shadow(0 6px 10px var(--shadow));}
   .game-question{font-weight:700;color:var(--ink-soft);}
   .math-expr{font-family:'Baloo 2';font-weight:800;font-size:clamp(1.8rem,6vw,2.6rem);color:var(--ink);letter-spacing:1px;}
+  .math-word-text{
+    font-family:'Baloo 2';font-weight:600;font-size:1.2rem;line-height:1.6;
+    max-width:52ch;color:var(--ink);
+    background:color-mix(in srgb, var(--success) 8%, var(--paper));
+    border:1px solid var(--border);border-radius:16px;padding:16px 20px;
+  }
   .game-options{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
   .opt-btn{
     border:2px solid var(--border);background:var(--paper);color:var(--ink);
@@ -633,6 +639,10 @@
       <h2>Математика есептері</h2>
     </div>
     <p class="panel-sub">Дұрыс жауапты тап! Есептер жоғарыда таңдалған сынып деңгейіне сай беріледі.</p>
+    <div class="syl-toggle-row">
+      <button type="button" class="toggle-btn math-mode-btn" data-mode="examples" aria-pressed="true">🔢 Мысалдар</button>
+      <button type="button" class="toggle-btn math-mode-btn" data-mode="word" aria-pressed="false">📖 Есептер</button>
+    </div>
     <div class="game-wrap" id="mathWrap"></div>
   </section>
 
@@ -1513,20 +1523,68 @@
     return parts.join(' ');
   }
 
-  var mathWrap = document.getElementById('mathWrap');
-  var mathIndex, mathScore;
-  var MATH_TOTAL = 8;
+  /* Story word problems ("есептер") — a fixed, hand-written set per grade,
+     unlike the procedurally generated arithmetic "мысалдар" above. */
+  var WORD_PROBLEMS_BY_GRADE = {
+    1: [
+      {text:'Айгүлдің 3 алмасы бар еді. Анасы оған тағы 2 алма берді. Айгүлдің қанша алмасы болды?', answer:5},
+      {text:'Асанда 7 шары бар еді. Ол 2 шарын досына сыйлады. Асанда қанша шары қалды?', answer:5},
+      {text:'Бақшада 4 үйрек пен 3 қаз жүр. Барлығы қанша құс бар?', answer:7},
+      {text:'Үстелде 6 кітап жатты, бала 1 кітап алды. Үстелде қанша кітап қалды?', answer:5}
+    ],
+    2: [
+      {text:'Дүкенде 24 алма бар еді. Сатушы тағы 18 алма әкелді. Барлығы қанша алма болды?', answer:42},
+      {text:'Мектепте 35 оқушы бар еді. 12 оқушы экскурсияға кетті. Мектепте қанша оқушы қалды?', answer:23},
+      {text:'Әр қорапта 8 қарындаш бар. 5 қорапта барлығы қанша қарындаш болады?', answer:40},
+      {text:'Ауылда 50 үй бар. Олардың 20-сы жаңа салынған. Ескі үйлер саны қанша?', answer:30}
+    ],
+    3: [
+      {text:'Бір сыныпта 6 қатар парта бар, әр қатарда 4 партадан. Сыныпта барлығы қанша парта бар?', answer:24},
+      {text:'36 алманы 4 балаға тең бөлу керек. Әр балаға қанша алма тиеді?', answer:9},
+      {text:'Кітапханада 7 сөреде кітаптар тұр, әр сөреде 8 кітаптан. Барлығы қанша кітап бар?', answer:56},
+      {text:'48 қарындашты 6 оқушыға тең бөлді. Әр оқушы қанша қарындаш алды?', answer:8}
+    ],
+    4: [
+      {text:'Фермада 125 қой және 87 ешкі бар. Барлық малдың саны қанша?', answer:212},
+      {text:'Автобуста 45 адам отыр еді. 3 аялдамада бірдей 6 адамнан түсіп қалды. Автобуста қанша адам қалды?', answer:27},
+      {text:'Зауытта күніне 144 бөлшек жасалады, ол 8 сағат жұмыс істейді. Сағатына қанша бөлшек жасалады?', answer:18},
+      {text:'Дүкенде 15 жәшік алма бар, әр жәшікте 24 алмадан. Барлығы қанша алма бар?', answer:360}
+    ]
+  };
 
+  var mathWrap = document.getElementById('mathWrap');
+  var mathModeButtons = Array.prototype.slice.call(document.querySelectorAll('.math-mode-btn'));
+  var mathMode = 'examples';
+  var mathIndex, mathScore, mathTotal;
+  var mathWordOrder;
+  var MATH_EXAMPLES_TOTAL = 8;
+
+  function currentMathProblem(){
+    if(mathMode === 'word'){
+      var wp = mathWordOrder[mathIndex];
+      return { expr: wp.text, answer: wp.answer, isWord: true };
+    }
+    return generateMathProblem(currentGrade);
+  }
   function startMath(){
     mathIndex = 0; mathScore = 0;
+    if(mathMode === 'word'){
+      mathWordOrder = shuffle(WORD_PROBLEMS_BY_GRADE[currentGrade]);
+      mathTotal = mathWordOrder.length;
+    } else {
+      mathTotal = MATH_EXAMPLES_TOTAL;
+    }
     renderMathQuestion();
   }
   function renderMathQuestion(){
-    var current = generateMathProblem(currentGrade);
+    var current = currentMathProblem();
     var opts = buildMathOptions(current.answer);
+    var promptHtml = current.isWord
+      ? '<div class="math-word-text">'+current.expr+'</div>'
+      : '<div class="math-expr">'+current.expr+' = ?</div>';
     mathWrap.innerHTML =
-      '<div class="game-score">Ұпай: '+mathScore+' / '+MATH_TOTAL+' &nbsp;·&nbsp; Есеп '+(mathIndex+1)+'/'+MATH_TOTAL+'</div>'+
-      '<div class="math-expr">'+current.expr+' = ?</div>'+
+      '<div class="game-score">Ұпай: '+mathScore+' / '+mathTotal+' &nbsp;·&nbsp; Есеп '+(mathIndex+1)+'/'+mathTotal+'</div>'+
+      promptHtml+
       '<div class="game-options">'+
         opts.map(function(o){return '<button type="button" class="opt-btn" data-val="'+o+'">'+o+'</button>';}).join('')+
       '</div>';
@@ -1546,21 +1604,21 @@
         }
         var cont = document.createElement('div');
         cont.style.marginTop = '8px';
-        var isLast = mathIndex === MATH_TOTAL - 1;
+        var isLast = mathIndex === mathTotal - 1;
         cont.innerHTML = '<button type="button" class="next-btn">'+(isLast ? 'Нәтиже' : 'Келесі есеп')+'</button>';
         mathWrap.appendChild(cont);
         cont.querySelector('.next-btn').addEventListener('click', function(){
           mathIndex++;
-          if(mathIndex < MATH_TOTAL) renderMathQuestion(); else renderMathResult();
+          if(mathIndex < mathTotal) renderMathQuestion(); else renderMathResult();
         });
       });
     });
   }
   function renderMathResult(){
-    var pct = mathScore / MATH_TOTAL;
+    var pct = mathScore / mathTotal;
     var stars = pct >= 0.9 ? '⭐⭐⭐' : pct >= 0.6 ? '⭐⭐' : '⭐';
     var msg = pct >= 0.9 ? 'Керемет! Сен нағыз математик екенсің!' : pct >= 0.6 ? 'Жақсы! Тағы жаттығайық.' : 'Тырыс! Тағы бір рет көрейік.';
-    var hsKey = 'sauattylyk-alemi-math-highscore-' + currentGrade;
+    var hsKey = 'sauattylyk-alemi-math-highscore-' + currentGrade + '-' + mathMode;
     var best = 0;
     try{ best = Number(localStorage.getItem(hsKey) || 0); }catch(e){}
     if(mathScore > best){
@@ -1569,12 +1627,21 @@
     }
     mathWrap.innerHTML =
       '<div class="stars">'+stars+'</div>'+
-      '<div class="result-title">'+mathScore+' / '+MATH_TOTAL+' дұрыс</div>'+
+      '<div class="result-title">'+mathScore+' / '+mathTotal+' дұрыс</div>'+
       '<div class="best">'+msg+'</div>'+
-      '<div class="best">Ең жақсы нәтиже: '+best+' / '+MATH_TOTAL+'</div>'+
+      '<div class="best">Ең жақсы нәтиже: '+best+' / '+mathTotal+'</div>'+
       '<button type="button" class="again-btn">Қайтадан ойнау</button>';
     mathWrap.querySelector('.again-btn').addEventListener('click', startMath);
   }
+  mathModeButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var mode = btn.dataset.mode;
+      if(mode === mathMode) return;
+      mathMode = mode;
+      mathModeButtons.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.mode === mathMode)); });
+      startMath();
+    });
+  });
   startMath();
 
   /* ---------------- grade switcher ---------------- */
