@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Сауаттылық әлемі</title>
+<meta name="description" content="Қазақ тілінде бастауыш сынып оқушыларына арналған әліпби, буын, сөз және диктант жаттығулары">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap">
+<style>
+  :root{
+    --bg:#FFF7E9;
+    --paper:#FFFDF6;
+    --ink:#2B2250;
+    --ink-soft:#665f87;
+    --accent:#FF6B4A;
+    --accent-ink:#ffffff;
+    --teal:#0E8074;
+    --teal-ink:#ffffff;
+    --yellow:#FFC43D;
+    --yellow-ink:#2B2250;
+    --plum:#6C4AB6;
+    --plum-ink:#ffffff;
+    --sky:#2E76B6;
+    --sky-ink:#ffffff;
+    --success:#2F9E44;
+    --error:#D64545;
+    --border:rgba(43,34,80,0.10);
+    --shadow:rgba(43,34,80,0.14);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1E1638;
+      --paper:#291F49;
+      --ink:#FDF6E7;
+      --ink-soft:#C9C0E8;
+      --accent:#FF8A6E;
+      --accent-ink:#241734;
+      --teal:#3DDBC9;
+      --teal-ink:#173832;
+      --yellow:#FFD166;
+      --yellow-ink:#2B2250;
+      --plum:#B79CF2;
+      --plum-ink:#251A44;
+      --sky:#7EC8F2;
+      --sky-ink:#132A3D;
+      --success:#6FCF7B;
+      --error:#FF7A7A;
+      --border:rgba(253,246,231,0.14);
+      --shadow:rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1E1638;
+    --paper:#291F49;
+    --ink:#FDF6E7;
+    --ink-soft:#C9C0E8;
+    --accent:#FF8A6E;
+    --accent-ink:#241734;
+    --teal:#3DDBC9;
+    --teal-ink:#173832;
+    --yellow:#FFD166;
+    --yellow-ink:#2B2250;
+    --plum:#B79CF2;
+    --plum-ink:#251A44;
+    --sky:#7EC8F2;
+    --sky-ink:#132A3D;
+    --success:#6FCF7B;
+    --error:#FF7A7A;
+    --border:rgba(253,246,231,0.14);
+    --shadow:rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Nunito',system-ui,-apple-system,'Segoe UI',sans-serif;
+    padding:0 20px 60px;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{
+    font-family:'Baloo 2','Nunito',system-ui,sans-serif;
+    text-wrap:balance;
+    margin:0;
+  }
+  button{font-family:inherit;}
+  .visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+
+  /* ---------- top nav ---------- */
+  .topbar{
+    max-width:980px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:14px;flex-wrap:wrap;
+    padding:18px 0 10px;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{width:40px;height:40px;flex:none;}
+  .brand-name{font-family:'Baloo 2';font-weight:700;font-size:1.25rem;}
+  .tabs{
+    display:flex;gap:6px;flex-wrap:wrap;
+    background:var(--paper);
+    border:1px solid var(--border);
+    padding:5px;border-radius:999px;
+    box-shadow:0 2px 10px var(--shadow);
+  }
+  .tab{
+    border:none;background:transparent;color:var(--ink-soft);
+    font-weight:800;font-size:0.92rem;
+    padding:9px 16px;border-radius:999px;cursor:pointer;
+    transition:background .15s ease, color .15s ease, transform .1s ease;
+  }
+  .tab:hover{color:var(--ink);}
+  .tab:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+  .tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);}
+  .tab:active{transform:scale(0.96);}
+
+  /* ---------- voice settings ---------- */
+  .voice-settings-btn{
+    border:1px solid var(--border); background:var(--paper); color:var(--ink-soft);
+    font-weight:800; font-size:0.85rem; padding:9px 14px; border-radius:999px; cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .voice-settings-btn:hover{color:var(--ink);}
+  .voice-settings-btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+  .voice-settings-btn[aria-expanded="true"]{background:var(--sky);color:var(--sky-ink);border-color:transparent;}
+  .voice-settings{
+    max-width:980px;margin:0 auto 14px;
+    background:var(--paper);border:1px solid var(--border);border-radius:20px;
+    padding:18px clamp(14px,4vw,26px);box-shadow:0 8px 24px var(--shadow);
+    display:flex;flex-direction:column;gap:12px;
+  }
+  .voice-settings-row{display:flex;flex-direction:column;gap:4px;}
+  .voice-settings-row label{font-weight:800;font-size:0.85rem;color:var(--ink-soft);}
+  .voice-settings-row input, .voice-settings-row select{
+    border:2px solid var(--border);border-radius:12px;background:var(--bg);color:var(--ink);
+    font-family:inherit;font-size:0.95rem;padding:10px 12px;
+  }
+  .voice-settings-row input:focus-visible, .voice-settings-row select:focus-visible{outline:3px solid var(--sky);outline-offset:1px;}
+  .voice-settings-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .voice-settings-hint{margin:0;color:var(--ink-soft);font-weight:700;font-size:0.85rem;}
+
+  /* ---------- grade selector ---------- */
+  .grade-bar{
+    max-width:980px;margin:0 auto 6px;
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+    justify-content:center;
+  }
+  .grade-label{font-weight:800;color:var(--ink-soft);font-size:0.9rem;}
+  .grade-buttons{
+    display:flex;gap:6px;flex-wrap:wrap;
+    background:var(--paper);border:1px solid var(--border);
+    padding:5px;border-radius:999px;box-shadow:0 2px 10px var(--shadow);
+  }
+  .grade-btn{
+    border:none;background:transparent;color:var(--ink-soft);
+    font-weight:800;font-size:0.92rem;
+    padding:9px 18px;border-radius:999px;cursor:pointer;
+    transition:background .15s ease, color .15s ease, transform .1s ease;
+  }
+  .grade-btn:hover{color:var(--ink);}
+  .grade-btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+  .grade-btn[aria-pressed="true"]{background:var(--plum);color:var(--plum-ink);}
+  .grade-btn:active{transform:scale(0.96);}
+  .grade-hint{width:100%;text-align:center;color:var(--ink-soft);font-weight:600;font-size:0.8rem;margin-top:-2px;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    max-width:980px;margin:10px auto 34px;
+    display:flex;align-items:center;gap:32px;
+    position:relative;padding:26px 8px 10px;
+  }
+  .hero-text{flex:1 1 380px;min-width:260px;}
+  .hero-text h1{font-size:clamp(2rem,5vw,2.9rem);font-weight:800;line-height:1.08;}
+  .hero-text h1 span{color:var(--accent);}
+  .hero-text p{
+    color:var(--ink-soft);font-size:1.05rem;line-height:1.55;
+    max-width:46ch;margin-top:12px;font-weight:600;
+  }
+  .hero-badges{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;}
+  .badge{
+    background:var(--paper);border:1px solid var(--border);
+    border-radius:14px;padding:8px 14px;font-weight:800;font-size:0.85rem;
+    color:var(--ink-soft);display:flex;align-items:center;gap:6px;
+  }
+  .hero-art{
+    flex:none;width:min(220px,38vw);position:relative;
+  }
+  .floaty{position:absolute;font-family:'Baloo 2';font-weight:700;color:var(--teal);opacity:.35;animation:bob 5s ease-in-out infinite;}
+  .floaty.f2{color:var(--yellow);animation-delay:.6s;animation-duration:6s;}
+  .floaty.f3{color:var(--plum);animation-delay:1.2s;animation-duration:5.5s;}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(-4deg);}50%{transform:translateY(-14px) rotate(4deg);}}
+  @media (prefers-reduced-motion: reduce){
+    .floaty{animation:none;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  /* ---------- section shell ---------- */
+  .page{max-width:980px;margin:0 auto;}
+  section.panel{
+    background:var(--paper);
+    border:1px solid var(--border);
+    border-radius:26px;
+    padding:28px clamp(16px,4vw,34px) 34px;
+    box-shadow:0 10px 30px var(--shadow);
+    margin-bottom:26px;
+  }
+  .panel-head{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap;}
+  .panel-tag{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:42px;height:42px;border-radius:14px;font-size:1.3rem;flex:none;
+  }
+  .tag-teal{background:color-mix(in srgb, var(--teal) 20%, transparent);}
+  .tag-coral{background:color-mix(in srgb, var(--accent) 20%, transparent);}
+  .tag-yellow{background:color-mix(in srgb, var(--yellow) 28%, transparent);}
+  .tag-plum{background:color-mix(in srgb, var(--plum) 22%, transparent);}
+  .tag-sky{background:color-mix(in srgb, var(--sky) 20%, transparent);}
+  .tag-mint{background:color-mix(in srgb, var(--success) 22%, transparent);}
+  .panel h2{font-size:1.6rem;font-weight:800;}
+  .panel-sub{color:var(--ink-soft);font-weight:700;margin:6px 0 22px;max-width:65ch;line-height:1.5;}
+
+  /* ---------- alphabet grid ---------- */
+  .abc-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));
+    gap:10px;
+  }
+  .abc-tile{
+    position:relative;height:92px;perspective:800px;
+  }
+  .abc-tile button{
+    all:unset;position:absolute;inset:0;cursor:pointer;
+    border-radius:16px;transform-style:preserve-3d;
+    transition:transform .5s cubic-bezier(.2,.8,.3,1);
+  }
+  .abc-tile button[aria-pressed="true"]{transform:rotateY(180deg);}
+  .abc-face{
+    position:absolute;inset:0;backface-visibility:hidden;
+    border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    border:1px solid var(--border);
+  }
+  .abc-front{background:color-mix(in srgb, var(--teal) 14%, var(--paper));}
+  .abc-front .big{font-family:'Baloo 2';font-weight:700;font-size:1.7rem;}
+  .abc-back{
+    background:var(--teal);color:var(--teal-ink);transform:rotateY(180deg);
+    padding:6px;gap:2px;text-align:center;
+  }
+  .abc-back .emoji{font-size:1.4rem;line-height:1;}
+  .abc-back .word{font-weight:800;font-size:0.78rem;line-height:1.15;margin-top:2px;}
+  .abc-tile button:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+
+  /* ---------- vocab cards ---------- */
+  .vocab-group{margin-bottom:22px;}
+  .vocab-group h3{font-size:1.05rem;font-weight:800;color:var(--ink-soft);margin-bottom:12px;}
+  .vocab-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;}
+  .vocab-card{
+    background:color-mix(in srgb, var(--yellow) 16%, var(--paper));
+    border:1px solid var(--border);border-radius:18px;
+    padding:14px 8px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;
+  }
+  .vocab-card .emoji{font-size:2rem;}
+  .vocab-card .word{font-weight:800;}
+  .speak-btn{
+    border:none;border-radius:999px;background:var(--paper);
+    border:1px solid var(--border);
+    width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:0.85rem;color:var(--ink-soft);
+  }
+  .speak-btn:hover{color:var(--ink);}
+  .speak-btn:focus-visible{outline:3px solid var(--teal);}
+
+  /* ---------- syllables ---------- */
+  .syl-toggle-row{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+  .toggle-btn{
+    border:1px solid var(--border);background:var(--paper);color:var(--ink);
+    font-weight:800;padding:9px 16px;border-radius:12px;cursor:pointer;
+  }
+  .toggle-btn[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:transparent;}
+  .syl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;}
+  .syl-card{
+    background:color-mix(in srgb, var(--plum) 10%, var(--paper));
+    border:1px solid var(--border);border-radius:16px;padding:14px;
+    display:flex;flex-direction:column;gap:8px;
+  }
+  .syl-word{font-family:'Baloo 2';font-weight:700;font-size:1.4rem;letter-spacing:.5px;}
+  .syl-word .part{padding:1px 2px;border-radius:6px;}
+  .syl-word .p0{background:color-mix(in srgb, var(--teal) 30%, transparent);}
+  .syl-word .p1{background:color-mix(in srgb, var(--accent) 26%, transparent);}
+  .syl-word .p2{background:color-mix(in srgb, var(--yellow) 40%, transparent);}
+  .syl-word.plain .part{background:none;}
+  .syl-meta{display:flex;justify-content:space-between;align-items:center;font-size:0.85rem;color:var(--ink-soft);font-weight:700;}
+  .syl-count{background:var(--paper);border:1px solid var(--border);border-radius:999px;padding:2px 10px;}
+
+  /* ---------- game ---------- */
+  .game-wrap{display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center;}
+  .game-score{font-weight:800;color:var(--ink-soft);}
+  .game-emoji{font-size:5rem;line-height:1;filter:drop-shadow(0 6px 10px var(--shadow));}
+  .game-question{font-weight:700;color:var(--ink-soft);}
+  .math-expr{font-family:'Baloo 2';font-weight:800;font-size:clamp(1.8rem,6vw,2.6rem);color:var(--ink);letter-spacing:1px;}
+  .game-options{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
+  .opt-btn{
+    border:2px solid var(--border);background:var(--paper);color:var(--ink);
+    font-family:'Baloo 2';font-weight:700;font-size:1.1rem;
+    padding:14px 26px;border-radius:16px;cursor:pointer;min-width:120px;
+    transition:transform .1s ease, background .15s ease, border-color .15s ease;
+  }
+  .opt-btn:hover:not(:disabled){transform:translateY(-2px);border-color:var(--teal);}
+  .opt-btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+  .opt-btn.correct{background:var(--success);border-color:var(--success);color:#fff;}
+  .opt-btn.wrong{background:var(--error);border-color:var(--error);color:#fff;}
+  .opt-btn:disabled{cursor:default;}
+  .next-btn, .again-btn{
+    border:none;background:var(--accent);color:var(--accent-ink);
+    font-weight:800;padding:12px 26px;border-radius:14px;cursor:pointer;font-size:1rem;
+  }
+  .next-btn:focus-visible, .again-btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+  .stars{font-size:2.4rem;letter-spacing:6px;}
+  .result-title{font-family:'Baloo 2';font-size:1.6rem;font-weight:700;}
+  .best{color:var(--ink-soft);font-weight:700;}
+
+  /* ---------- dictation ---------- */
+  .dict-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px;}
+  .play-btn{
+    border:none;border-radius:999px;background:var(--sky);color:var(--sky-ink);
+    width:64px;height:64px;font-size:1.6rem;cursor:pointer;flex:none;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 16px var(--shadow);transition:transform .1s ease;
+  }
+  .play-btn:hover{transform:scale(1.05);}
+  .play-btn:active{transform:scale(0.95);}
+  .play-btn:focus-visible{outline:3px solid var(--accent);outline-offset:3px;}
+  .dict-info{display:flex;flex-direction:column;gap:2px;}
+  .dict-progress{font-weight:800;color:var(--ink-soft);font-size:0.9rem;}
+  .dict-hint{color:var(--ink-soft);font-weight:600;font-size:0.85rem;}
+  .slow-toggle{
+    margin-left:auto;border:1px solid var(--border);background:var(--paper);color:var(--ink);
+    font-weight:800;padding:8px 14px;border-radius:12px;cursor:pointer;font-size:0.88rem;
+  }
+  .slow-toggle[aria-pressed="true"]{background:var(--sky);color:var(--sky-ink);border-color:transparent;}
+  .dict-sub-actions{display:flex;gap:16px;flex-wrap:wrap;margin:-6px 0 16px 80px;}
+  .link-btn{
+    border:none;background:transparent;color:var(--sky);
+    font-weight:800;font-size:0.88rem;cursor:pointer;padding:4px 2px;
+    text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:3px;
+  }
+  .link-btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+  .link-btn[aria-pressed="true"]{text-decoration:none;color:var(--accent);}
+  .dict-shown-text{
+    font-family:'Baloo 2';font-size:1.1rem;line-height:1.5;
+    background:color-mix(in srgb, var(--sky) 12%, var(--paper));
+    border:1px dashed var(--border);border-radius:14px;
+    padding:10px 16px;margin:-6px 0 16px 80px;
+  }
+  @media (max-width:640px){ .dict-sub-actions{margin-left:0;} .dict-shown-text{margin-left:0;} }
+  #dictInput{
+    width:100%;min-height:90px;resize:vertical;
+    border:2px solid var(--border);border-radius:16px;
+    background:var(--bg);color:var(--ink);
+    font-family:'Baloo 2';font-size:1.15rem;padding:14px 16px;
+  }
+  #dictInput:focus-visible{outline:3px solid var(--sky);outline-offset:1px;}
+  .dict-actions{display:flex;gap:10px;margin-top:14px;flex-wrap:wrap;}
+  .check-btn{
+    border:none;background:var(--accent);color:var(--accent-ink);
+    font-weight:800;padding:12px 24px;border-radius:14px;cursor:pointer;font-size:1rem;
+  }
+  .ghost-btn{
+    border:1px solid var(--border);background:transparent;color:var(--ink-soft);
+    font-weight:800;padding:12px 20px;border-radius:14px;cursor:pointer;font-size:0.95rem;
+  }
+  .check-btn:focus-visible, .ghost-btn:focus-visible{outline:3px solid var(--teal);outline-offset:2px;}
+  .dict-result{margin-top:20px;padding-top:18px;border-top:1px dashed var(--border);}
+  .dict-summary{font-weight:800;margin-bottom:14px;}
+  .dict-summary .ok{color:var(--success);}
+  .dict-sentence{
+    font-family:'Baloo 2';font-size:1.25rem;line-height:2.1;
+  }
+  .w-chip{display:inline-block;margin:2px 3px;padding:2px 4px;border-radius:8px;}
+  .w-ok{background:color-mix(in srgb, var(--success) 20%, transparent);}
+  .w-skip{background:color-mix(in srgb, var(--ink-soft) 18%, transparent);text-decoration:line-through;text-decoration-color:var(--ink-soft);}
+  .w-extra{background:color-mix(in srgb, var(--plum) 22%, transparent);}
+  .w-sub{background:color-mix(in srgb, var(--error) 16%, transparent);}
+  .dict-sentence mark.miss{background:color-mix(in srgb, var(--error) 45%, transparent);color:var(--ink);border-radius:4px;padding:0 1px;}
+  .dict-detail{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+  .dict-row{
+    display:flex;flex-wrap:wrap;gap:8px;align-items:baseline;
+    background:color-mix(in srgb, var(--error) 8%, var(--paper));
+    border:1px solid var(--border);border-radius:12px;padding:8px 12px;font-size:0.95rem;
+  }
+  .dict-row .lbl{font-weight:800;color:var(--ink-soft);font-size:0.8rem;}
+  .dict-row .val{font-family:'Baloo 2';font-size:1.05rem;}
+  .dict-row mark.extra{background:color-mix(in srgb, var(--error) 45%, transparent);border-radius:4px;padding:0 1px;text-decoration:line-through;}
+
+  [hidden]{display:none !important;}
+
+  /* ---------- retell (мазмұндама) ---------- */
+  .retell-reading{
+    background:color-mix(in srgb, var(--yellow) 10%, var(--paper));
+    border:1px solid var(--border);border-radius:18px;
+    padding:18px 20px;margin-bottom:18px;
+  }
+  .retell-text{font-family:'Baloo 2';font-size:1.15rem;line-height:1.7;margin:0 0 14px;}
+  .retell-timer-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .retell-timer{
+    font-weight:800;color:var(--ink-soft);background:var(--paper);
+    border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-family:'Baloo 2';
+  }
+  #retellInput{
+    width:100%;min-height:110px;resize:vertical;
+    border:2px solid var(--border);border-radius:16px;
+    background:var(--bg);color:var(--ink);
+    font-family:'Baloo 2';font-size:1.15rem;padding:14px 16px;
+  }
+  #retellInput:focus-visible{outline:3px solid var(--sky);outline-offset:1px;}
+
+  footer{max-width:980px;margin:10px auto 0;text-align:center;color:var(--ink-soft);font-weight:700;font-size:0.85rem;padding:10px 0 20px;}
+
+  @media (max-width:640px){
+    .hero{flex-direction:column;text-align:center;}
+    .hero-badges{justify-content:center;}
+    .tabs{justify-content:center;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">
+    <svg class="brand-mark" viewBox="0 0 64 64" role="img" aria-label="Үкі маскот">
+      <ellipse cx="32" cy="38" rx="22" ry="20" fill="var(--teal)"/>
+      <circle cx="22" cy="30" r="9" fill="#fff"/>
+      <circle cx="42" cy="30" r="9" fill="#fff"/>
+      <circle cx="22" cy="30" r="4.5" fill="var(--ink)"/>
+      <circle cx="42" cy="30" r="4.5" fill="var(--ink)"/>
+      <path d="M32 34 L27 42 L37 42 Z" fill="var(--yellow)"/>
+      <path d="M12 22 L22 16 L20 27 Z" fill="var(--teal)"/>
+      <path d="M52 22 L42 16 L44 27 Z" fill="var(--teal)"/>
+      <path d="M14 50 Q32 60 50 50" stroke="var(--accent)" stroke-width="4" fill="none" stroke-linecap="round"/>
+    </svg>
+    <span class="brand-name">Сауаттылық әлемі</span>
+  </div>
+  <div class="tabs" role="tablist" aria-label="Бөлімдер">
+    <button class="tab" role="tab" data-panel="panel-abc" aria-selected="true">Әліпби</button>
+    <button class="tab" role="tab" data-panel="panel-syl" aria-selected="false">Буындар</button>
+    <button class="tab" role="tab" data-panel="panel-vocab" aria-selected="false">Сөздер</button>
+    <button class="tab" role="tab" data-panel="panel-game" aria-selected="false">Ойын</button>
+    <button class="tab" role="tab" data-panel="panel-dict" aria-selected="false">Диктант</button>
+    <button class="tab" role="tab" data-panel="panel-retell" aria-selected="false">Мазмұндама</button>
+    <button class="tab" role="tab" data-panel="panel-math" aria-selected="false">Математика</button>
+  </div>
+  <button type="button" class="voice-settings-btn" id="voiceSettingsBtn" aria-expanded="false" aria-controls="voiceSettings" title="Дауыс баптаулары">⚙️ Дауыс</button>
+</div>
+
+<div class="voice-settings" id="voiceSettings" hidden>
+  <div class="voice-settings-row">
+    <label for="azureKeyInput">Azure Speech кілті (Ocp-Apim-Subscription-Key)</label>
+    <input type="password" id="azureKeyInput" placeholder="Мысалы: 32 таңбалы кілт" autocomplete="off">
+  </div>
+  <div class="voice-settings-row">
+    <label for="azureRegionInput">Аймақ (region)</label>
+    <input type="text" id="azureRegionInput" placeholder="Мысалы: westeurope">
+  </div>
+  <div class="voice-settings-row">
+    <label for="azureVoiceSelect">Дауыс</label>
+    <select id="azureVoiceSelect">
+      <option value="kk-KZ-AigulNeural">Айгүл (әйел дауысы)</option>
+      <option value="kk-KZ-DauletNeural">Дәулет (ер дауысы)</option>
+    </select>
+  </div>
+  <div class="voice-settings-actions">
+    <button type="button" class="check-btn" id="voiceSaveBtn">Сақтау</button>
+    <button type="button" class="ghost-btn" id="voiceTestBtn">Дауысты тексеру</button>
+    <button type="button" class="link-btn" id="voiceClearBtn">Кілтті өшіру</button>
+  </div>
+  <p class="voice-settings-hint" id="voiceStatus">Кілт енгізілмеген — қазір браузердің қосалқы дауысы қолданылады.</p>
+</div>
+
+<div class="hero">
+  <div class="hero-text">
+    <h1>Әріптерді тану, <span>буынды құра</span>, сөзді оқы!</h1>
+    <p>1–4 сынып оқушыларына арналған қазақ әліпбиі, буын және сөз әлемі. Танысу — Дана Үкі көмекшіңмен!</p>
+    <div class="hero-badges">
+      <span class="badge">🔤 42 әріп</span>
+      <span class="badge">🧩 Буынға бөлу</span>
+      <span class="badge">🎯 Сөз ойыны</span>
+    </div>
+  </div>
+  <div class="hero-art" aria-hidden="true">
+    <span class="floaty f1" style="top:0;left:10%;font-size:2.2rem;">Ә</span>
+    <span class="floaty f2" style="top:40%;left:70%;font-size:1.8rem;">Ө</span>
+    <span class="floaty f3" style="top:75%;left:20%;font-size:2rem;">Ұ</span>
+    <svg viewBox="0 0 200 200" width="100%" height="200">
+      <ellipse cx="100" cy="120" rx="70" ry="62" fill="var(--teal)"/>
+      <ellipse cx="100" cy="130" rx="40" ry="34" fill="color-mix(in srgb, var(--yellow) 55%, var(--paper))"/>
+      <circle cx="72" cy="100" r="28" fill="#fff"/>
+      <circle cx="128" cy="100" r="28" fill="#fff"/>
+      <circle cx="72" cy="100" r="13" fill="var(--ink)"/>
+      <circle cx="128" cy="100" r="13" fill="var(--ink)"/>
+      <circle cx="76" cy="96" r="4" fill="#fff"/>
+      <circle cx="132" cy="96" r="4" fill="#fff"/>
+      <path d="M100 108 L88 124 L112 124 Z" fill="var(--yellow)"/>
+      <path d="M40 78 L64 58 L58 88 Z" fill="var(--teal)"/>
+      <path d="M160 78 L136 58 L142 88 Z" fill="var(--teal)"/>
+      <path d="M55 168 Q100 190 145 168" stroke="var(--accent)" stroke-width="8" fill="none" stroke-linecap="round"/>
+    </svg>
+  </div>
+</div>
+
+<div class="grade-bar">
+  <span class="grade-label">Сынып деңгейі:</span>
+  <div class="grade-buttons" role="group" aria-label="Сынып деңгейін таңдау">
+    <button type="button" class="grade-btn" data-grade="1" aria-pressed="true">1-сынып</button>
+    <button type="button" class="grade-btn" data-grade="2" aria-pressed="false">2-сынып</button>
+    <button type="button" class="grade-btn" data-grade="3" aria-pressed="false">3-сынып</button>
+    <button type="button" class="grade-btn" data-grade="4" aria-pressed="false">4-сынып</button>
+  </div>
+  <span class="grade-hint">Буындар, Сөздер, Ойын, Диктант және Математика деңгейге сай өзгереді</span>
+</div>
+
+<div class="page">
+
+  <section class="panel" id="panel-abc">
+    <div class="panel-head">
+      <span class="panel-tag tag-teal">🔤</span>
+      <h2>Қазақ әліппесі</h2>
+    </div>
+    <p class="panel-sub">Әріпті бас, ол айналып, мысал сөзін көрсетеді. Дауысын тыңдау үшін кішкентай түймені бас.</p>
+    <div class="abc-grid" id="abcGrid"></div>
+  </section>
+
+  <section class="panel" id="panel-syl" hidden>
+    <div class="panel-head">
+      <span class="panel-tag tag-coral">🧩</span>
+      <h2>Сөзді буынға бөлу</h2>
+    </div>
+    <p class="panel-sub">Әр сөз буындарға түрлі түспен бөлінген. Түймені басып, түстерді жасырып немесе қайта көрсетіп көр.</p>
+    <div class="syl-toggle-row">
+      <button class="toggle-btn" id="sylToggle" aria-pressed="true">Түстерді жасыру</button>
+    </div>
+    <div class="syl-grid" id="sylGrid"></div>
+  </section>
+
+  <section class="panel" id="panel-vocab" hidden>
+    <div class="panel-head">
+      <span class="panel-tag tag-yellow">🖼️</span>
+      <h2>Суретті сөздер</h2>
+    </div>
+    <p class="panel-sub">Тақырып бойынша топталған сөздер. Сөзді тыңдау үшін дөңгелек түймені бас.</p>
+    <div id="vocabGroups"></div>
+  </section>
+
+  <section class="panel" id="panel-game" hidden>
+    <div class="panel-head">
+      <span class="panel-tag tag-plum">🎯</span>
+      <h2>Танып ал! ойыны</h2>
+    </div>
+    <p class="panel-sub">Суретке қарап, дұрыс сөзді тап. Неше ұпай жинайсың екен?</p>
+    <div class="game-wrap" id="gameWrap"></div>
+  </section>
+
+  <section class="panel" id="panel-dict" hidden>
+    <div class="panel-head">
+      <span class="panel-tag tag-sky">🎧</span>
+      <h2>Диктант жаз</h2>
+    </div>
+    <p class="panel-sub">Сөйлемді тыңда, естігеніңді төмендегі жолаққа жаз да, «Тексеру» түймесін бас — қай жерде қателескеніңді көрсетемін.</p>
+
+    <div class="dict-top">
+      <button type="button" class="play-btn" id="dictPlay" aria-label="Сөзбе-сөз тыңдау">🔊</button>
+      <div class="dict-info">
+        <span class="dict-progress" id="dictProgress">1 / 5-сөйлем</span>
+        <span class="dict-hint">Әр сөз бөлек, аралықпен оқылады — жазуға үлгересің</span>
+      </div>
+      <button type="button" class="slow-toggle" id="dictSlow" aria-pressed="false">🐢 Баяу дыбыстау</button>
+    </div>
+    <div class="dict-sub-actions">
+      <button type="button" class="link-btn" id="dictPlayWhole">▶ Тұтас сөйлемді тыңдау</button>
+      <button type="button" class="link-btn" id="dictReplay">🔁 Қайталау</button>
+      <button type="button" class="link-btn" id="dictShowText" aria-pressed="false">👁 Мәтінді көрсету (дыбыс түсініксіз болса)</button>
+    </div>
+    <p class="dict-shown-text" id="dictShownText" hidden></p>
+
+    <label for="dictInput" class="visually-hidden">Естіген сөйлемді жаз</label>
+    <textarea id="dictInput" placeholder="Естіген сөйлемді осында жаз..." autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
+
+    <div class="dict-actions">
+      <button type="button" class="check-btn" id="dictCheck">Тексеру</button>
+      <button type="button" class="ghost-btn" id="dictNext">Келесі сөйлем ▶</button>
+      <button type="button" class="ghost-btn" id="dictClear">Тазалау</button>
+    </div>
+
+    <div class="dict-result" id="dictResult" hidden></div>
+  </section>
+
+  <section class="panel" id="panel-retell" hidden>
+    <div class="panel-head">
+      <span class="panel-tag tag-yellow">📝</span>
+      <h2>Мазмұндама жаз</h2>
+    </div>
+    <p class="panel-sub">Мәтінді мұқият оқы да есіңде сақта. Уақыт бітkенде мәтін жасырылады — есіңде қалғанды жаз да, «Тексеру» түймесін бас.</p>
+
+    <div class="syl-toggle-row">
+      <button type="button" class="toggle-btn retell-level-btn" data-level="1" aria-pressed="true">1-деңгей · 3 сөйлем</button>
+      <button type="button" class="toggle-btn retell-level-btn" data-level="2" aria-pressed="false">2-деңгей · 5 сөйлемге дейін</button>
+      <button type="button" class="toggle-btn retell-level-btn" data-level="3" aria-pressed="false">3-деңгей · толық мәтін</button>
+    </div>
+
+    <div class="retell-reading" id="retellReading">
+      <p class="retell-text" id="retellText"></p>
+      <div class="retell-timer-row">
+        <span class="retell-timer" id="retellTimer">⏱ 20 с</span>
+        <button type="button" class="check-btn" id="retellHideBtn">Дайынмын, жасыру</button>
+      </div>
+    </div>
+
+    <div class="retell-writing" id="retellWriting" hidden>
+      <label for="retellInput" class="visually-hidden">Есіңде қалған мәтінді жаз</label>
+      <textarea id="retellInput" placeholder="Есіңде қалған мәтінді осында жаз..." autocomplete="off" autocapitalize="off" spellcheck="false"></textarea>
+      <div class="dict-actions">
+        <button type="button" class="check-btn" id="retellCheck">Тексеру</button>
+        <button type="button" class="ghost-btn" id="retellShowAgain">Мәтінді қайта көрсету</button>
+        <button type="button" class="ghost-btn" id="retellNext">Келесі мәтін ▶</button>
+        <button type="button" class="ghost-btn" id="retellClear">Тазалау</button>
+      </div>
+    </div>
+
+    <div class="dict-result" id="retellResult" hidden></div>
+  </section>
+
+  <section class="panel" id="panel-math" hidden>
+    <div class="panel-head">
+      <span class="panel-tag tag-mint">➗</span>
+      <h2>Математика есептері</h2>
+    </div>
+    <p class="panel-sub">Дұрыс жауапты тап! Есептер жоғарыда таңдалған сынып деңгейіне сай беріледі.</p>
+    <div class="game-wrap" id="mathWrap"></div>
+  </section>
+
+</div>
+
+<footer>Сауаттылық әлемі — бастауыш сынып оқушыларына арналған оқу алаңы 🦉</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  var canSpeak = 'speechSynthesis' in window;
+  var kkVoice = null;
+  function pickVoice(){
+    if(!canSpeak) return;
+    var voices = window.speechSynthesis.getVoices();
+    kkVoice = voices.find(function(v){return v.lang && v.lang.toLowerCase().indexOf('kk')===0;})
+      || voices.find(function(v){return /natural|neural|online/i.test(v.name) && v.lang && v.lang.toLowerCase().indexOf('ru')===0;})
+      || voices.find(function(v){return /google/i.test(v.name) && v.lang && v.lang.toLowerCase().indexOf('ru')===0;})
+      || voices.find(function(v){return /irina|milena|elena|female/i.test(v.name) && v.lang && v.lang.toLowerCase().indexOf('ru')===0;})
+      || voices.find(function(v){return v.lang && v.lang.toLowerCase().indexOf('ru')===0;})
+      || null;
+  }
+  if(canSpeak){
+    pickVoice();
+    window.speechSynthesis.onvoiceschanged = pickVoice;
+  }
+  /* Raises pitch for questions/exclamations so read-aloud text keeps its intonation
+     instead of sounding flat on every sentence. */
+  function sentencePitch(text){
+    var t = (text||'').trim();
+    if(/[?？]\s*$/.test(t)) return 1.18;
+    if(/[!！]\s*$/.test(t)) return 1.1;
+    return 1.0;
+  }
+  /* No Kazakh voice is installed on most systems, so a Russian voice reads the text
+     instead. Kazakh-only letters (ә ғ қ ң ө ұ үh і) are not in its alphabet and come out
+     mangled or silent — swapping each for its closest Russian sound keeps speech clear
+     even though it's a pronunciation approximation, not the real spelling. */
+  var SPEAKABLE_MAP = {
+    'ә':'а','Ә':'А', 'ғ':'г','Ғ':'Г', 'қ':'к','Қ':'К', 'ң':'н','Ң':'Н',
+    'ө':'о','Ө':'О', 'ұ':'у','Ұ':'У', 'ү':'у','Ү':'У', 'һ':'х','Һ':'Х',
+    'і':'и','І':'И'
+  };
+  function hasRealKazakhVoice(){
+    return !!(kkVoice && kkVoice.lang && kkVoice.lang.toLowerCase().indexOf('kk')===0);
+  }
+  function toSpeakable(text){
+    if(hasRealKazakhVoice()) return text;
+    return (text||'').replace(/[әӘғҒқҚңҢөӨұҰүҮһҺіІ]/g, function(ch){ return SPEAKABLE_MAP[ch]; });
+  }
+  function speakBrowser(text, rate, pitch){
+    if(!canSpeak) return;
+    try{
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(toSpeakable(text));
+      u.lang = kkVoice ? kkVoice.lang : 'ru-RU';
+      if(kkVoice) u.voice = kkVoice;
+      u.rate = rate;
+      u.pitch = pitch;
+      u.volume = 1;
+      window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+
+  /* ---------------- Azure Speech (real Kazakh neural voice) ---------------- */
+  var AZURE_KEY_STORAGE = 'sauattylyk-alemi-azure-key';
+  var AZURE_REGION_STORAGE = 'sauattylyk-alemi-azure-region';
+  var AZURE_VOICE_STORAGE = 'sauattylyk-alemi-azure-voice';
+  function getAzureConfig(){
+    var key='', region='', voice='kk-KZ-AigulNeural';
+    try{
+      key = localStorage.getItem(AZURE_KEY_STORAGE) || '';
+      region = localStorage.getItem(AZURE_REGION_STORAGE) || '';
+      voice = localStorage.getItem(AZURE_VOICE_STORAGE) || voice;
+    }catch(e){}
+    return {key:key, region:region, voice:voice};
+  }
+  function hasAzure(){
+    var c = getAzureConfig();
+    return !!(c.key && c.region);
+  }
+  function escapeSsml(s){
+    return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function buildSsml(innerXml, rateStr, voice){
+    return '<speak version="1.0" xml:lang="kk-KZ"><voice xml:lang="kk-KZ" name="'+voice+'"><prosody rate="'+rateStr+'">'+innerXml+'</prosody></voice></speak>';
+  }
+  var currentAzureAudio = null;
+  function stopAllAudio(){
+    if(canSpeak){ try{ window.speechSynthesis.cancel(); }catch(e){} }
+    if(currentAzureAudio){ try{ currentAzureAudio.pause(); }catch(e){} currentAzureAudio = null; }
+  }
+  function playAzureSsml(ssml, cfg){
+    var endpoint = 'https://'+cfg.region+'.tts.speech.microsoft.com/cognitiveservices/v1';
+    return fetch(endpoint, {
+      method:'POST',
+      headers:{
+        'Ocp-Apim-Subscription-Key': cfg.key,
+        'Content-Type':'application/ssml+xml',
+        'X-Microsoft-OutputFormat':'audio-16khz-64kbitrate-mono-mp3'
+      },
+      body: ssml
+    }).then(function(res){
+      if(!res.ok) throw new Error('Azure TTS HTTP '+res.status);
+      return res.blob();
+    }).then(function(blob){
+      return new Promise(function(resolve, reject){
+        var url = URL.createObjectURL(blob);
+        var audio = new Audio(url);
+        currentAzureAudio = audio;
+        audio.onended = function(){ URL.revokeObjectURL(url); if(currentAzureAudio===audio) currentAzureAudio=null; resolve(); };
+        audio.onerror = function(){ URL.revokeObjectURL(url); if(currentAzureAudio===audio) currentAzureAudio=null; reject(new Error('audio playback failed')); };
+        audio.play().catch(reject);
+      });
+    });
+  }
+  function speak(text){
+    stopAllAudio();
+    if(hasAzure()){
+      var cfg = getAzureConfig();
+      playAzureSsml(buildSsml(escapeSsml(text), '-8%', cfg.voice), cfg)
+        .catch(function(){ speakBrowser(text, 0.82, sentencePitch(text)); });
+      return;
+    }
+    speakBrowser(text, 0.82, sentencePitch(text));
+  }
+
+  /* ---------------- grade level ---------------- */
+  var GRADE_KEY = 'sauattylyk-alemi-grade';
+  var currentGrade = 1;
+  try{
+    var savedGrade = Number(localStorage.getItem(GRADE_KEY));
+    if(savedGrade >= 1 && savedGrade <= 4) currentGrade = savedGrade;
+  }catch(e){}
+
+  /* ---------------- tabs ---------------- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  tabs.forEach(function(tab){
+    tab.addEventListener('click', function(){
+      if(canSpeak){ try{ window.speechSynthesis.cancel(); }catch(e){} }
+      if(typeof dictPlayToken !== 'undefined') dictPlayToken++;
+      if(typeof clearRetellTimer === 'function') clearRetellTimer();
+      tabs.forEach(function(t){t.setAttribute('aria-selected','false');});
+      tab.setAttribute('aria-selected','true');
+      document.querySelectorAll('section.panel').forEach(function(p){p.hidden = true;});
+      document.getElementById(tab.dataset.panel).hidden = false;
+      if(tab.dataset.panel === 'panel-retell' && typeof startRetell === 'function') startRetell();
+    });
+  });
+
+  /* ---------------- alphabet data ---------------- */
+  var ALPHABET = [
+    {l:'А', w:'алма', e:'🍎'}, {l:'Ә', w:'әже', e:'👵'}, {l:'Б', w:'бала', e:'🧒'},
+    {l:'В', w:'вагон', e:'🚃'}, {l:'Г', w:'гүл', e:'🌸'}, {l:'Ғ', w:'ғарыш', e:'🚀'},
+    {l:'Д', w:'дос', e:'🤝'}, {l:'Е', w:'ел', e:'🌍'}, {l:'Ё', w:'ёлка', e:'🎄'},
+    {l:'Ж', w:'жұлдыз', e:'⭐'}, {l:'З', w:'зат', e:'🎁'}, {l:'И', w:'ине', e:'🪡'},
+    {l:'Й', w:'йод', e:'🧴', note:'сөз басында сирек кездеседі'},
+    {l:'К', w:'күн', e:'☀️'}, {l:'Қ', w:'қоян', e:'🐰'}, {l:'Л', w:'лимон', e:'🍋'},
+    {l:'М', w:'мысық', e:'🐱'}, {l:'Н', w:'нан', e:'🍞'},
+    {l:'Ң', w:'таң', e:'🌅', note:'сөздің басында келмейді'},
+    {l:'О', w:'орман', e:'🌲'}, {l:'Ө', w:'өзен', e:'🏞️'}, {l:'П', w:'піл', e:'🐘'},
+    {l:'Р', w:'рахмет', e:'🙏'}, {l:'С', w:'су', e:'💧'}, {l:'Т', w:'тау', e:'⛰️'},
+    {l:'У', w:'уақыт', e:'⏰'}, {l:'Ұ', w:'ұя', e:'🪹'}, {l:'Ү', w:'үй', e:'🏠'},
+    {l:'Ф', w:'футбол', e:'⚽'}, {l:'Х', w:'хат', e:'✉️'},
+    {l:'Һ', w:'һәм', e:'📜', note:'араб-парсы сөздерінде кездеседі'},
+    {l:'Ц', w:'цирк', e:'🎪'}, {l:'Ч', w:'чемодан', e:'🧳'}, {l:'Ш', w:'шар', e:'🎈'},
+    {l:'Щ', w:'щетка', e:'🪥'},
+    {l:'Ъ', w:'', e:'🔤', note:'қатаң белгі — дербес сөз құрамайды'},
+    {l:'Ы', w:'ыдыс', e:'🍽️'}, {l:'І', w:'іні', e:'👦'},
+    {l:'Ь', w:'', e:'🔤', note:'жіңішкелік белгісі — дербес сөз құрамайды'},
+    {l:'Э', w:'эхо', e:'🔊'}, {l:'Ю', w:'юрта', e:'⛺'}, {l:'Я', w:'яхта', e:'⛵'}
+  ];
+
+  var abcGrid = document.getElementById('abcGrid');
+  ALPHABET.forEach(function(item, idx){
+    var tile = document.createElement('div');
+    tile.className = 'abc-tile';
+    var speakText = item.w || item.l;
+    tile.innerHTML =
+      '<button type="button" aria-pressed="false" aria-label="'+item.l+' әрпі">'+
+        '<span class="abc-face abc-front"><span class="big">'+item.l+'</span></span>'+
+        '<span class="abc-face abc-back">'+
+          '<span class="emoji">'+item.e+'</span>'+
+          '<span class="word">'+(item.w || item.note)+'</span>'+
+        '</span>'+
+      '</button>';
+    var btn = tile.querySelector('button');
+    btn.addEventListener('click', function(){
+      var pressed = btn.getAttribute('aria-pressed') === 'true';
+      btn.setAttribute('aria-pressed', String(!pressed));
+      if(!pressed) speak(speakText);
+    });
+    abcGrid.appendChild(tile);
+  });
+
+  /* ---------------- syllables ---------------- */
+  var WORDS_BY_GRADE = {
+    1: [
+      {parts:['а','на']}, {parts:['а','та']}, {parts:['ә','же']}, {parts:['а','па']},
+      {parts:['і','ні']}, {parts:['ба','ла']}, {parts:['и','не']}, {parts:['үй']}
+    ],
+    2: [
+      {parts:['кі','тап']}, {parts:['мек','теп']}, {parts:['су','рет']}, {parts:['дәп','тер']},
+      {parts:['қа','лам']}, {parts:['ба','лық']}, {parts:['ор','ман']}, {parts:['те','ре','зе']}
+    ],
+    3: [
+      {parts:['дү','кен']}, {parts:['мұ','ға','лім']}, {parts:['дә','рі','гер']}, {parts:['а','ял','да','ма']},
+      {parts:['ав','то','бус']}, {parts:['ве','ло','си','пед']}, {parts:['по','йыз']}, {parts:['ұ','шақ']}
+    ],
+    4: [
+      {parts:['о','қу','шы','лар']}, {parts:['мұ','ға','лім','дер']}, {parts:['тем','пе','ра','ту','ра']},
+      {parts:['ком','пью','тер']}, {parts:['кі','тап','ха','на']}, {parts:['дос','тық']},
+      {parts:['бос','тан','дық']}, {parts:['бі','лім']}
+    ]
+  };
+  var sylGrid = document.getElementById('sylGrid');
+  var sylToggle = document.getElementById('sylToggle');
+  var coloredOn = true;
+
+  function renderSyllables(){
+    sylGrid.innerHTML = '';
+    WORDS_BY_GRADE[currentGrade].forEach(function(w){
+      var card = document.createElement('div');
+      card.className = 'syl-card';
+      var wordHtml = w.parts.map(function(p, i){
+        return '<span class="part p'+(i%3)+'">'+p+'</span>';
+      }).join('');
+      var full = w.parts.join('');
+      card.innerHTML =
+        '<div class="syl-word'+(coloredOn ? '' : ' plain')+'">'+wordHtml+'</div>'+
+        '<div class="syl-meta"><span>«'+full+'»</span><span class="syl-count">'+w.parts.length+' буын</span></div>';
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function(){ speak(full); });
+      sylGrid.appendChild(card);
+    });
+  }
+  sylToggle.addEventListener('click', function(){
+    coloredOn = !coloredOn;
+    sylToggle.setAttribute('aria-pressed', String(coloredOn));
+    sylToggle.textContent = coloredOn ? 'Түстерді жасыру' : 'Түстерді көрсету';
+    renderSyllables();
+  });
+  renderSyllables();
+
+  /* ---------------- vocab ---------------- */
+  var VOCAB_BY_GRADE = {
+    1: [
+      {title:'Үй жануарлары', items:[
+        {w:'мысық', e:'🐱'}, {w:'ит', e:'🐶'}, {w:'қоян', e:'🐰'}, {w:'тауық', e:'🐔'}
+      ]},
+      {title:'Түстер', items:[
+        {w:'қызыл', e:'🔴'}, {w:'көк', e:'🔵'}, {w:'жасыл', e:'🟢'}, {w:'сары', e:'🟡'}
+      ]}
+    ],
+    2: [
+      {title:'Табиғат', items:[
+        {w:'күн', e:'☀️'}, {w:'ай', e:'🌙'}, {w:'жұлдыз', e:'⭐'}, {w:'гүл', e:'🌸'}, {w:'тау', e:'⛰️'}, {w:'өзен', e:'🏞️'}
+      ]},
+      {title:'Үй және мектеп', items:[
+        {w:'үй', e:'🏠'}, {w:'кітап', e:'📖'}, {w:'қалам', e:'✏️'}, {w:'дәптер', e:'📓'}
+      ]}
+    ],
+    3: [
+      {title:'Мамандықтар', items:[
+        {w:'мұғалім', e:'👩‍🏫'}, {w:'дәрігер', e:'👨‍⚕️'}, {w:'ұшқыш', e:'👨‍✈️'}, {w:'аспаз', e:'👨‍🍳'}
+      ]},
+      {title:'Көлік', items:[
+        {w:'автобус', e:'🚌'}, {w:'велосипед', e:'🚲'}, {w:'пойыз', e:'🚂'}, {w:'ұшақ', e:'✈️'}
+      ]}
+    ],
+    4: [
+      {title:'Сезімдер', items:[
+        {w:'қуаныш', e:'😄'}, {w:'ашу', e:'😠'}, {w:'қайғы', e:'😢'}, {w:'таңырқау', e:'😲'}
+      ]},
+      {title:'Дерексіз ұғымдар', items:[
+        {w:'достық', e:'🤝'}, {w:'білім', e:'📚'}, {w:'еңбек', e:'💪'}, {w:'бостандық', e:'🕊️'}
+      ]}
+    ]
+  };
+  var vocabRoot = document.getElementById('vocabGroups');
+  function renderVocab(){
+    vocabRoot.innerHTML = '';
+    VOCAB_BY_GRADE[currentGrade].forEach(function(group){
+      var wrap = document.createElement('div');
+      wrap.className = 'vocab-group';
+      var row = document.createElement('div');
+      row.className = 'vocab-row';
+      group.items.forEach(function(item){
+        var card = document.createElement('div');
+        card.className = 'vocab-card';
+        card.innerHTML =
+          '<span class="emoji">'+item.e+'</span>'+
+          '<span class="word">'+item.w+'</span>'+
+          '<button type="button" class="speak-btn" aria-label="'+item.w+' сөзін тыңдау">🔊</button>';
+        card.querySelector('.speak-btn').addEventListener('click', function(){ speak(item.w); });
+        row.appendChild(card);
+      });
+      wrap.innerHTML = '<h3>'+group.title+'</h3>';
+      wrap.appendChild(row);
+      vocabRoot.appendChild(wrap);
+    });
+  }
+  renderVocab();
+
+  /* ---------------- game ---------------- */
+  var QUESTIONS_BY_GRADE = {
+    1: [
+      {e:'🐱', correct:'мысық', options:['мысық','ит','қоян']},
+      {e:'🐶', correct:'ит', options:['ит','тауық','сары']},
+      {e:'🐰', correct:'қоян', options:['қоян','мысық','көк']},
+      {e:'🐔', correct:'тауық', options:['тауық','ит','жасыл']},
+      {e:'🔴', correct:'қызыл', options:['қызыл','көк','сары']},
+      {e:'🔵', correct:'көк', options:['көк','жасыл','қызыл']},
+      {e:'🟢', correct:'жасыл', options:['жасыл','сары','көк']},
+      {e:'🟡', correct:'сары', options:['сары','қызыл','жасыл']}
+    ],
+    2: [
+      {e:'☀️', correct:'күн', options:['күн','ай','тау']},
+      {e:'🌙', correct:'ай', options:['ай','жұлдыз','гүл']},
+      {e:'⭐', correct:'жұлдыз', options:['жұлдыз','күн','өзен']},
+      {e:'🌸', correct:'гүл', options:['гүл','тау','кітап']},
+      {e:'⛰️', correct:'тау', options:['тау','өзен','дәптер']},
+      {e:'🏞️', correct:'өзен', options:['өзен','гүл','ай']},
+      {e:'📖', correct:'кітап', options:['кітап','дәптер','күн']},
+      {e:'📓', correct:'дәптер', options:['дәптер','кітап','жұлдыз']}
+    ],
+    3: [
+      {e:'👩‍🏫', correct:'мұғалім', options:['мұғалім','дәрігер','аспаз']},
+      {e:'👨‍⚕️', correct:'дәрігер', options:['дәрігер','ұшқыш','мұғалім']},
+      {e:'👨‍✈️', correct:'ұшқыш', options:['ұшқыш','аспаз','дәрігер']},
+      {e:'👨‍🍳', correct:'аспаз', options:['аспаз','мұғалім','ұшқыш']},
+      {e:'🚌', correct:'автобус', options:['автобус','велосипед','пойыз']},
+      {e:'🚲', correct:'велосипед', options:['велосипед','ұшақ','автобус']},
+      {e:'🚂', correct:'пойыз', options:['пойыз','автобус','ұшақ']},
+      {e:'✈️', correct:'ұшақ', options:['ұшақ','пойыз','велосипед']}
+    ],
+    4: [
+      {e:'😄', correct:'қуаныш', options:['қуаныш','ашу','қайғы']},
+      {e:'😠', correct:'ашу', options:['ашу','қуаныш','таңырқау']},
+      {e:'😢', correct:'қайғы', options:['қайғы','ашу','достық']},
+      {e:'😲', correct:'таңырқау', options:['таңырқау','білім','қуаныш']},
+      {e:'🤝', correct:'достық', options:['достық','еңбек','бостандық']},
+      {e:'📚', correct:'білім', options:['білім','достық','ашу']},
+      {e:'💪', correct:'еңбек', options:['еңбек','бостандық','қайғы']},
+      {e:'🕊️', correct:'бостандық', options:['бостандық','еңбек','таңырқау']}
+    ]
+  };
+  var QUESTIONS = QUESTIONS_BY_GRADE[currentGrade];
+  function shuffle(arr){
+    var a = arr.slice();
+    for(var i=a.length-1;i>0;i--){
+      var j = Math.floor(Math.random()*(i+1));
+      var t=a[i]; a[i]=a[j]; a[j]=t;
+    }
+    return a;
+  }
+  var gameWrap = document.getElementById('gameWrap');
+  var order, qIndex, score;
+
+  function startGame(){
+    QUESTIONS = QUESTIONS_BY_GRADE[currentGrade];
+    order = shuffle(QUESTIONS);
+    qIndex = 0; score = 0;
+    renderQuestion();
+  }
+  function renderQuestion(){
+    var q = order[qIndex];
+    var opts = shuffle(q.options);
+    gameWrap.innerHTML =
+      '<div class="game-score">Ұпай: '+score+' / '+order.length+' &nbsp;·&nbsp; Сұрақ '+(qIndex+1)+'/'+order.length+'</div>'+
+      '<div class="game-emoji">'+q.e+'</div>'+
+      '<div class="game-question">Бұл не?</div>'+
+      '<div class="game-options">'+
+        opts.map(function(o){return '<button type="button" class="opt-btn" data-val="'+o+'">'+o+'</button>';}).join('')+
+      '</div>';
+    var buttons = gameWrap.querySelectorAll('.opt-btn');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        buttons.forEach(function(b){b.disabled = true;});
+        var val = btn.dataset.val;
+        if(val === q.correct){
+          btn.classList.add('correct');
+          score++;
+          speak('Дұрыс! ' + q.correct);
+        } else {
+          btn.classList.add('wrong');
+          buttons.forEach(function(b){ if(b.dataset.val === q.correct) b.classList.add('correct'); });
+          speak('Дұрысы: ' + q.correct);
+        }
+        var cont = document.createElement('div');
+        cont.style.marginTop = '8px';
+        var isLast = qIndex === order.length - 1;
+        cont.innerHTML = '<button type="button" class="next-btn">'+(isLast ? 'Нәтиже' : 'Келесі сұрақ')+'</button>';
+        gameWrap.appendChild(cont);
+        cont.querySelector('.next-btn').addEventListener('click', function(){
+          qIndex++;
+          if(qIndex < order.length) renderQuestion(); else renderResult();
+        });
+      });
+    });
+  }
+  function renderResult(){
+    var pct = score / order.length;
+    var stars = pct >= 0.9 ? '⭐⭐⭐' : pct >= 0.6 ? '⭐⭐' : '⭐';
+    var msg = pct >= 0.9 ? 'Керемет! Сен нағыз сауатты баласың!' : pct >= 0.6 ? 'Жақсы! Тағы жаттығайық.' : 'Тырыс! Тағы бір рет көрейік.';
+    var hsKey = 'sauattylyk-alemi-highscore-' + currentGrade;
+    var best = 0;
+    try{ best = Number(localStorage.getItem(hsKey) || 0); }catch(e){}
+    if(score > best){
+      best = score;
+      try{ localStorage.setItem(hsKey, String(best)); }catch(e){}
+    }
+    gameWrap.innerHTML =
+      '<div class="stars">'+stars+'</div>'+
+      '<div class="result-title">'+score+' / '+order.length+' дұрыс</div>'+
+      '<div class="best">'+msg+'</div>'+
+      '<div class="best">Ең жақсы нәтиже: '+best+' / '+order.length+'</div>'+
+      '<button type="button" class="again-btn">Қайтадан ойнау</button>';
+    gameWrap.querySelector('.again-btn').addEventListener('click', startGame);
+  }
+  startGame();
+
+  /* ---------------- dictation ---------------- */
+  var DICTATION_BY_GRADE = {
+    1: [
+      'Күн шықты.',
+      'Ит үрді.',
+      'Қар жауды.',
+      'Ана күледі.',
+      'Мысық жүгірді.'
+    ],
+    2: [
+      'Балалар ойнайды.',
+      'Бала бақшаға барды.',
+      'Мысық үстелде отыр.',
+      'Құстар аспанда ұшады.',
+      'Апа нан пісірді.'
+    ],
+    3: [
+      'Ана дәмді нан пісірді.',
+      'Аспанда ай мен жұлдыз жарқырайды.',
+      'Оқушылар мектепке ерте келді.',
+      'Мұғалім жаңа сабақты түсіндірді.',
+      'Балалар саябақта доп ойнады.'
+    ],
+    4: [
+      'Егер ертең ауа райы жақсы болса, біз саябаққа барамыз.',
+      'Кітапхана — білім мен ғылымның қайнар көзі.',
+      'Қыс болса да, балалар далада ойнауды ұнатады.',
+      'Мұғалім оқушыларға жаңа тақырыпты түсіндіріп берді.',
+      'Ол сабақтан кейін үйіне асығып жүрді.'
+    ]
+  };
+  var DICTATION = DICTATION_BY_GRADE[currentGrade];
+
+  function escapeHtml(s){
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function cleanWord(w){
+    return w.replace(/[^\p{L}]/gu,'').toLowerCase();
+  }
+
+  function lcsDiff(a, b, eq){
+    var n = a.length, m = b.length;
+    var dp = [];
+    for(var i=0;i<=n;i++){ dp.push(new Array(m+1).fill(0)); }
+    for(i=n-1;i>=0;i--){
+      for(var j=m-1;j>=0;j--){
+        dp[i][j] = eq(a[i],b[j]) ? dp[i+1][j+1]+1 : Math.max(dp[i+1][j], dp[i][j+1]);
+      }
+    }
+    var ops = []; i=0; j=0;
+    while(i<n && j<m){
+      if(eq(a[i],b[j])){ ops.push({type:'equal', a:a[i], b:b[j]}); i++; j++; }
+      else if(dp[i+1][j] >= dp[i][j+1]){ ops.push({type:'delete', a:a[i]}); i++; }
+      else { ops.push({type:'insert', b:b[j]}); j++; }
+    }
+    while(i<n){ ops.push({type:'delete', a:a[i]}); i++; }
+    while(j<m){ ops.push({type:'insert', b:b[j]}); j++; }
+    return ops;
+  }
+
+  function mergeSubstitutions(ops){
+    var out = [];
+    for(var k=0;k<ops.length;k++){
+      var cur = ops[k], nxt = ops[k+1];
+      if(cur && nxt && ((cur.type==='delete' && nxt.type==='insert') || (cur.type==='insert' && nxt.type==='delete'))){
+        var del = cur.type==='delete' ? cur : nxt;
+        var ins = cur.type==='insert' ? cur : nxt;
+        out.push({type:'substitute', a:del.a, b:ins.b});
+        k++;
+      } else {
+        out.push(cur);
+      }
+    }
+    return out;
+  }
+
+  function charDiffHtml(orig, typed){
+    var ops = lcsDiff(Array.from(orig), Array.from(typed), function(x,y){ return x.toLowerCase()===y.toLowerCase(); });
+    var origHtml='', typedHtml='';
+    ops.forEach(function(op){
+      if(op.type==='equal'){ origHtml += escapeHtml(op.a); typedHtml += escapeHtml(op.b); }
+      else if(op.type==='delete'){ origHtml += '<mark class="miss">'+escapeHtml(op.a)+'</mark>'; }
+      else if(op.type==='insert'){ typedHtml += '<mark class="extra">'+escapeHtml(op.b)+'</mark>'; }
+    });
+    return {origHtml:origHtml, typedHtml:typedHtml};
+  }
+
+  var dictIndex = 0;
+  var dictSlow = false;
+  var dictPlayToken = 0;
+  var dictPlayBtn = document.getElementById('dictPlay');
+  var dictSlowBtn = document.getElementById('dictSlow');
+  var dictPlayWholeBtn = document.getElementById('dictPlayWhole');
+  var dictReplayBtn = document.getElementById('dictReplay');
+  var dictShowTextBtn = document.getElementById('dictShowText');
+  var dictShownText = document.getElementById('dictShownText');
+  var dictProgress = document.getElementById('dictProgress');
+  var dictInput = document.getElementById('dictInput');
+  var dictResult = document.getElementById('dictResult');
+
+  function hideDictText(){
+    dictShownText.hidden = true;
+    dictShowTextBtn.setAttribute('aria-pressed', 'false');
+    dictShowTextBtn.textContent = '👁 Мәтінді көрсету (дыбыс түсініксіз болса)';
+  }
+
+  function speakAt(text, rate){
+    if(hasAzure()){
+      var cfg = getAzureConfig();
+      var rateStr = Math.round((rate-1)*100)+'%';
+      playAzureSsml(buildSsml(escapeSsml(text), rateStr, cfg.voice), cfg)
+        .catch(function(){ speakBrowser(text, rate, sentencePitch(text)); });
+      return;
+    }
+    speakBrowser(text, rate, sentencePitch(text));
+  }
+  function stopDictationAudio(){
+    dictPlayToken++;
+    stopAllAudio();
+  }
+  /* Reads one word at a time with a pause between each, so a child has
+     time to hear and write every word before the next one starts.
+     With Azure this is a single request with <break> tags — one real
+     Kazakh-voice clip instead of many separate browser utterances. */
+  function playDictationWords(){
+    stopDictationAudio();
+    var myToken = dictPlayToken;
+    var sentence = DICTATION[dictIndex];
+    var words = sentence.split(/\s+/);
+    var pause = dictSlow ? 1200 : 850;
+    if(hasAzure()){
+      var cfg = getAzureConfig();
+      var rateStr = dictSlow ? '-30%' : '-12%';
+      var inner = words.map(function(w){ return escapeSsml(w); }).join('<break time="'+pause+'ms"/>');
+      playAzureSsml(buildSsml(inner, rateStr, cfg.voice), cfg).catch(function(){
+        if(myToken === dictPlayToken) playDictationWordsBrowser(words, pause, myToken);
+      });
+      return;
+    }
+    playDictationWordsBrowser(words, pause, myToken);
+  }
+  function playDictationWordsBrowser(words, pause, myToken){
+    if(!canSpeak) return;
+    var pitch = sentencePitch(words.join(' '));
+    var rate = dictSlow ? 0.65 : 0.82;
+    var i = 0;
+    function next(){
+      if(myToken !== dictPlayToken || i >= words.length) return;
+      var u = new SpeechSynthesisUtterance(toSpeakable(words[i]));
+      u.lang = kkVoice ? kkVoice.lang : 'ru-RU';
+      if(kkVoice) u.voice = kkVoice;
+      u.rate = rate;
+      u.pitch = pitch;
+      u.volume = 1;
+      u.onend = function(){
+        if(myToken !== dictPlayToken) return;
+        i++;
+        setTimeout(next, pause);
+      };
+      window.speechSynthesis.speak(u);
+    }
+    next();
+  }
+  function playDictationWhole(){
+    stopDictationAudio();
+    speakAt(DICTATION[dictIndex], dictSlow ? 0.68 : 0.82);
+  }
+  function renderDictProgress(){
+    dictProgress.textContent = (dictIndex+1)+' / '+DICTATION.length+'-сөйлем';
+  }
+  function resetDictation(){
+    DICTATION = DICTATION_BY_GRADE[currentGrade];
+    stopDictationAudio();
+    dictIndex = 0;
+    dictInput.value = '';
+    dictResult.hidden = true;
+    hideDictText();
+    renderDictProgress();
+  }
+  /* Shared by dictation and retell: compares the original text against what the
+     child typed, word by word, and marks skipped/extra/substituted words. */
+  function buildDiffResult(original, typedRaw){
+    var origWords = original.split(/\s+/);
+    var typedWords = typedRaw.length ? typedRaw.split(/\s+/) : [];
+    var ops = mergeSubstitutions(lcsDiff(origWords, typedWords, function(o,t){ return cleanWord(o)===cleanWord(t); }));
+
+    var correctCount = 0;
+    var sentenceHtml = '';
+    var detailRows = [];
+
+    ops.forEach(function(op){
+      if(op.type==='equal'){
+        correctCount++;
+        sentenceHtml += '<span class="w-chip w-ok">'+escapeHtml(op.a)+'</span> ';
+      } else if(op.type==='delete'){
+        sentenceHtml += '<span class="w-chip w-skip">'+escapeHtml(op.a)+'</span> ';
+        detailRows.push('<div class="dict-row"><span class="lbl">ӨТКІЗІП АЛДЫҢ</span><span class="val">'+escapeHtml(op.a)+'</span></div>');
+      } else if(op.type==='insert'){
+        sentenceHtml += '<span class="w-chip w-extra">'+escapeHtml(op.b)+'</span> ';
+        detailRows.push('<div class="dict-row"><span class="lbl">АРТЫҚ ЖАЗДЫҢ</span><span class="val">'+escapeHtml(op.b)+'</span></div>');
+      } else if(op.type==='substitute'){
+        var d = charDiffHtml(op.a, op.b);
+        sentenceHtml += '<span class="w-chip w-sub">'+d.origHtml+'</span> ';
+        detailRows.push(
+          '<div class="dict-row"><span class="lbl">ЖАЗҒАНЫҢ</span><span class="val">'+d.typedHtml+'</span>'+
+          '<span class="lbl">ДҰРЫСЫ</span><span class="val">'+d.origHtml+'</span></div>'
+        );
+      }
+    });
+
+    return { sentenceHtml: sentenceHtml, detailRows: detailRows, correctCount: correctCount, total: origWords.length };
+  }
+  function checkDictation(){
+    var r = buildDiffResult(DICTATION[dictIndex], dictInput.value.trim());
+    var pct = r.correctCount/r.total;
+    var summaryClass = pct===1 ? 'ok' : '';
+    var summaryText = pct===1
+      ? 'Тамаша! Барлық '+r.total+' сөз дұрыс!'
+      : r.correctCount+' / '+r.total+' сөз дұрыс жазылды.';
+
+    dictResult.hidden = false;
+    dictResult.innerHTML =
+      '<div class="dict-summary '+summaryClass+'">'+summaryText+'</div>'+
+      '<div class="dict-sentence">'+r.sentenceHtml+'</div>'+
+      (r.detailRows.length ? '<div class="dict-detail">'+r.detailRows.join('')+'</div>' : '');
+
+    if(pct===1) speakAt('Тамаша!', 0.9);
+  }
+
+  dictPlayBtn.addEventListener('click', playDictationWords);
+  dictPlayWholeBtn.addEventListener('click', playDictationWhole);
+  dictReplayBtn.addEventListener('click', playDictationWords);
+  dictSlowBtn.addEventListener('click', function(){
+    dictSlow = !dictSlow;
+    dictSlowBtn.setAttribute('aria-pressed', String(dictSlow));
+  });
+  document.getElementById('dictCheck').addEventListener('click', checkDictation);
+  document.getElementById('dictClear').addEventListener('click', function(){
+    dictInput.value = '';
+    dictInput.focus();
+  });
+  dictShowTextBtn.addEventListener('click', function(){
+    var showing = dictShowTextBtn.getAttribute('aria-pressed') === 'true';
+    if(showing){
+      hideDictText();
+    } else {
+      dictShownText.textContent = DICTATION[dictIndex];
+      dictShownText.hidden = false;
+      dictShowTextBtn.setAttribute('aria-pressed', 'true');
+      dictShowTextBtn.textContent = '🙈 Мәтінді жасыру';
+    }
+  });
+  document.getElementById('dictNext').addEventListener('click', function(){
+    stopDictationAudio();
+    dictIndex = (dictIndex+1) % DICTATION.length;
+    dictInput.value = '';
+    dictResult.hidden = true;
+    hideDictText();
+    renderDictProgress();
+    dictInput.focus();
+  });
+  dictInput.addEventListener('keydown', function(e){
+    if(e.key==='Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); checkDictation(); }
+  });
+  renderDictProgress();
+
+  /* ---------------- retell (мазмұндама) ---------------- */
+  var RETELL_TEXTS = {
+    1: [
+      'Күн шықты. Құстар ән салды. Балалар далада ойнады.',
+      'Қыс болды. Қар жауды. Балалар шаңғы тепті.',
+      'Ана дүкенге барды. Ол нан сатып алды. Үйге қайтып келді.'
+    ],
+    2: [
+      'Күзде табиғат әдемі болады. Жапырақтар сарғаяды да, ағаштан түседі. Балалар саябақта ойнайды. Кейде жаңбыр жауады. Бәрі суыққа жылы киім киеді.',
+      'Мектепте бірінші қоңырау соқты. Оқушылар сыныпқа кірді. Мұғалім жаңа сабақты бастады. Балалар зейін қойып тыңдады. Сабақ соңында үй жұмысы берілді.',
+      'Біздің отбасымыз саяхатқа шықты. Алдымен тауға бардық. Таза ауа мен әдемі көрініс бізді қуантты. Кешке от жағып, шәй іштік. Түнде жұлдыздарды тамашаладық.'
+    ],
+    3: [
+      'Ерте заманда бір кедей шал болыпты. Оның үйінде тек бір ешкісі болыпты. Күндердің күнінде шал ешкісін жайылымға айдап апарыпты. Ешкі шөп жеп жүріп, орманның ішіне кіріп кетіпті. Шал оны іздеп, ұзақ жүріпті. Ақыры кеш батарда ешкісін тауып алыпты. Екеуі бірге үйге қайтыпты. Осылай кедей шал ешкісін қайтадан тапты.',
+      'Асан мен Дәурен ежелден дос еді. Олар бір сыныпта оқыды және бірге ойнады. Бір күні Асан сабаққа кітабын алмай келді. Ол қатты уайымдады, себебі мұғалім тексеретін еді. Дәурен мұны байқап, өз кітабын досына ұсынды. Олар бір кітапты бөлісіп оқыды. Сабақ соңында мұғалім екеуін де мақтады. Асан Дәуренге шын жүректен алғыс айтты. Сол күннен бастап олардың достығы бұрынғыдан да берік болды.',
+      'Қазақстанның табиғаты өте бай әрі әртүрлі. Елімізде биік таулар, кең дала және терең көлдер бар. Жазда далада алуан түсті гүлдер өседі. Күзде орман сарғайып, көзге ерекше әдемі көрінеді. Қыста бәрі ақ қарға оранады. Ал көктемде табиғат қайта жанданып, жасыл жапырақтармен көмкеріледі. Әр мезгілдің өз сұлулығы бар. Сондықтан да туған жерімізді сүйіп, оны қорғауымыз керек.'
+    ]
+  };
+  var RETELL_TIME = {1:20, 2:40, 3:60};
+  var retellLevel = 1;
+  var retellIndex = {1:0, 2:0, 3:0};
+  var retellRemaining = 0;
+  var retellTimerHandle = null;
+
+  var retellLevelButtons = Array.prototype.slice.call(document.querySelectorAll('.retell-level-btn'));
+  var retellReading = document.getElementById('retellReading');
+  var retellWriting = document.getElementById('retellWriting');
+  var retellTextEl = document.getElementById('retellText');
+  var retellTimerEl = document.getElementById('retellTimer');
+  var retellInput = document.getElementById('retellInput');
+  var retellResult = document.getElementById('retellResult');
+
+  function clearRetellTimer(){
+    if(retellTimerHandle){ clearInterval(retellTimerHandle); retellTimerHandle = null; }
+  }
+  function updateRetellTimerLabel(){
+    retellTimerEl.textContent = '⏱ ' + retellRemaining + ' с';
+  }
+  function hideRetellText(){
+    clearRetellTimer();
+    retellReading.hidden = true;
+    retellWriting.hidden = false;
+    retellInput.focus();
+  }
+  function startRetell(){
+    clearRetellTimer();
+    retellResult.hidden = true;
+    retellInput.value = '';
+    retellWriting.hidden = true;
+    retellReading.hidden = false;
+    retellTextEl.textContent = RETELL_TEXTS[retellLevel][retellIndex[retellLevel]];
+    retellRemaining = RETELL_TIME[retellLevel];
+    updateRetellTimerLabel();
+    retellTimerHandle = setInterval(function(){
+      retellRemaining--;
+      updateRetellTimerLabel();
+      if(retellRemaining <= 0) hideRetellText();
+    }, 1000);
+  }
+  function checkRetell(){
+    var original = RETELL_TEXTS[retellLevel][retellIndex[retellLevel]];
+    var r = buildDiffResult(original, retellInput.value.trim());
+    var pct = r.total ? r.correctCount/r.total : 0;
+    var summaryClass = pct===1 ? 'ok' : '';
+    var summaryText = pct===1
+      ? 'Тамаша! Мәтінді толық есіңде сақтапсың!'
+      : r.correctCount+' / '+r.total+' сөз дәл келді ('+Math.round(pct*100)+'%).';
+
+    retellResult.hidden = false;
+    retellResult.innerHTML =
+      '<div class="dict-summary '+summaryClass+'">'+summaryText+'</div>'+
+      '<div class="dict-sentence">'+r.sentenceHtml+'</div>'+
+      (r.detailRows.length ? '<div class="dict-detail">'+r.detailRows.join('')+'</div>' : '');
+
+    if(pct===1) speakAt('Тамаша!', 0.9);
+  }
+  retellLevelButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var lvl = Number(btn.dataset.level);
+      if(lvl === retellLevel) return;
+      retellLevel = lvl;
+      retellLevelButtons.forEach(function(b){ b.setAttribute('aria-pressed', String(Number(b.dataset.level)===retellLevel)); });
+      startRetell();
+    });
+  });
+  document.getElementById('retellHideBtn').addEventListener('click', hideRetellText);
+  document.getElementById('retellShowAgain').addEventListener('click', startRetell);
+  document.getElementById('retellNext').addEventListener('click', function(){
+    retellIndex[retellLevel] = (retellIndex[retellLevel]+1) % RETELL_TEXTS[retellLevel].length;
+    startRetell();
+  });
+  document.getElementById('retellClear').addEventListener('click', function(){
+    retellInput.value = '';
+    retellInput.focus();
+  });
+  document.getElementById('retellCheck').addEventListener('click', checkRetell);
+  retellInput.addEventListener('keydown', function(e){
+    if(e.key==='Enter' && (e.ctrlKey || e.metaKey)){ e.preventDefault(); checkRetell(); }
+  });
+  retellTextEl.textContent = RETELL_TEXTS[retellLevel][retellIndex[retellLevel]];
+  retellRemaining = RETELL_TIME[retellLevel];
+  updateRetellTimerLabel();
+
+  /* ---------------- math ---------------- */
+  function randInt(min, max){ return Math.floor(Math.random()*(max-min+1))+min; }
+
+  function generateMathProblem(grade){
+    var a, b, op, answer, expr;
+    if(grade === 1){
+      if(Math.random() < 0.5){
+        a = randInt(0,10); b = randInt(0, 10-a);
+        op = '+'; answer = a+b;
+      } else {
+        a = randInt(0,10); b = randInt(0,a);
+        op = '−'; answer = a-b;
+      }
+      expr = a+' '+op+' '+b;
+    } else if(grade === 2){
+      var kind2 = Math.random();
+      if(kind2 < 0.45){
+        a = randInt(10,80); b = randInt(10, 99-a);
+        op = '+'; answer = a+b;
+      } else if(kind2 < 0.9){
+        a = randInt(20,99); b = randInt(0,a);
+        op = '−'; answer = a-b;
+      } else {
+        a = randInt(1,10); b = 2;
+        op = '×'; answer = a*b;
+      }
+      expr = a+' '+op+' '+b;
+    } else if(grade === 3){
+      if(Math.random() < 0.6){
+        a = randInt(2,10); b = randInt(2,10);
+        op = '×'; answer = a*b;
+      } else {
+        b = randInt(2,10); answer = randInt(2,10); a = b*answer;
+        op = '÷';
+      }
+      expr = a+' '+op+' '+b;
+    } else {
+      var kind4 = Math.random();
+      if(kind4 < 0.35){
+        a = randInt(11,20); b = randInt(2,9);
+        op = '×'; answer = a*b;
+        expr = a+' '+op+' '+b;
+      } else if(kind4 < 0.7){
+        b = randInt(2,12); answer = randInt(2,12); a = b*answer;
+        op = '÷';
+        expr = a+' '+op+' '+b;
+      } else {
+        var x = randInt(2,9), y = randInt(2,9), z = randInt(2,9);
+        answer = x + y*z;
+        expr = x+' + '+y+' × '+z;
+      }
+    }
+    return { expr: expr, answer: answer };
+  }
+  function buildMathOptions(answer){
+    var opts = [answer];
+    var guard = 0;
+    while(opts.length < 4 && guard < 100){
+      guard++;
+      var delta = randInt(-5,5);
+      var cand = answer + delta;
+      if(delta === 0 || cand < 0 || opts.indexOf(cand) !== -1) continue;
+      opts.push(cand);
+    }
+    return shuffle(opts);
+  }
+  /* Speaking a bare digit like "77" makes the voice read it in whatever
+     language it defaults to (Russian for the fallback voice), not Kazakh.
+     Spelling the number out as Kazakh words keeps the answer audibly Kazakh
+     no matter which voice is speaking it. */
+  var KZ_UNITS = ['нөл','бір','екі','үш','төрт','бес','алты','жеті','сегіз','тоғыз'];
+  var KZ_TENS = [null,'он','жиырма','отыз','қырық','елу','алпыс','жетпіс','сексен','тоқсан'];
+  function numberToKazakhWords(n){
+    if(n === 0) return KZ_UNITS[0];
+    var parts = [];
+    var hundreds = Math.floor(n/100);
+    var rem = n % 100;
+    if(hundreds > 0){
+      if(hundreds > 1) parts.push(KZ_UNITS[hundreds]);
+      parts.push('жүз');
+    }
+    var tens = Math.floor(rem/10);
+    var unit = rem % 10;
+    if(tens > 0) parts.push(KZ_TENS[tens]);
+    if(unit > 0) parts.push(KZ_UNITS[unit]);
+    return parts.join(' ');
+  }
+
+  var mathWrap = document.getElementById('mathWrap');
+  var mathIndex, mathScore;
+  var MATH_TOTAL = 8;
+
+  function startMath(){
+    mathIndex = 0; mathScore = 0;
+    renderMathQuestion();
+  }
+  function renderMathQuestion(){
+    var current = generateMathProblem(currentGrade);
+    var opts = buildMathOptions(current.answer);
+    mathWrap.innerHTML =
+      '<div class="game-score">Ұпай: '+mathScore+' / '+MATH_TOTAL+' &nbsp;·&nbsp; Есеп '+(mathIndex+1)+'/'+MATH_TOTAL+'</div>'+
+      '<div class="math-expr">'+current.expr+' = ?</div>'+
+      '<div class="game-options">'+
+        opts.map(function(o){return '<button type="button" class="opt-btn" data-val="'+o+'">'+o+'</button>';}).join('')+
+      '</div>';
+    var buttons = mathWrap.querySelectorAll('.opt-btn');
+    buttons.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        buttons.forEach(function(b){b.disabled = true;});
+        var val = Number(btn.dataset.val);
+        if(val === current.answer){
+          btn.classList.add('correct');
+          mathScore++;
+          speak('Дұрыс! ' + numberToKazakhWords(current.answer));
+        } else {
+          btn.classList.add('wrong');
+          buttons.forEach(function(b){ if(Number(b.dataset.val) === current.answer) b.classList.add('correct'); });
+          speak('Дұрысы: ' + numberToKazakhWords(current.answer));
+        }
+        var cont = document.createElement('div');
+        cont.style.marginTop = '8px';
+        var isLast = mathIndex === MATH_TOTAL - 1;
+        cont.innerHTML = '<button type="button" class="next-btn">'+(isLast ? 'Нәтиже' : 'Келесі есеп')+'</button>';
+        mathWrap.appendChild(cont);
+        cont.querySelector('.next-btn').addEventListener('click', function(){
+          mathIndex++;
+          if(mathIndex < MATH_TOTAL) renderMathQuestion(); else renderMathResult();
+        });
+      });
+    });
+  }
+  function renderMathResult(){
+    var pct = mathScore / MATH_TOTAL;
+    var stars = pct >= 0.9 ? '⭐⭐⭐' : pct >= 0.6 ? '⭐⭐' : '⭐';
+    var msg = pct >= 0.9 ? 'Керемет! Сен нағыз математик екенсің!' : pct >= 0.6 ? 'Жақсы! Тағы жаттығайық.' : 'Тырыс! Тағы бір рет көрейік.';
+    var hsKey = 'sauattylyk-alemi-math-highscore-' + currentGrade;
+    var best = 0;
+    try{ best = Number(localStorage.getItem(hsKey) || 0); }catch(e){}
+    if(mathScore > best){
+      best = mathScore;
+      try{ localStorage.setItem(hsKey, String(best)); }catch(e){}
+    }
+    mathWrap.innerHTML =
+      '<div class="stars">'+stars+'</div>'+
+      '<div class="result-title">'+mathScore+' / '+MATH_TOTAL+' дұрыс</div>'+
+      '<div class="best">'+msg+'</div>'+
+      '<div class="best">Ең жақсы нәтиже: '+best+' / '+MATH_TOTAL+'</div>'+
+      '<button type="button" class="again-btn">Қайтадан ойнау</button>';
+    mathWrap.querySelector('.again-btn').addEventListener('click', startMath);
+  }
+  startMath();
+
+  /* ---------------- grade switcher ---------------- */
+  var gradeButtons = Array.prototype.slice.call(document.querySelectorAll('.grade-btn'));
+  function syncGradeButtons(){
+    gradeButtons.forEach(function(btn){
+      btn.setAttribute('aria-pressed', String(Number(btn.dataset.grade) === currentGrade));
+    });
+  }
+  function setGrade(g){
+    currentGrade = g;
+    try{ localStorage.setItem(GRADE_KEY, String(g)); }catch(e){}
+    syncGradeButtons();
+    renderSyllables();
+    renderVocab();
+    startGame();
+    resetDictation();
+    startMath();
+  }
+  gradeButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var g = Number(btn.dataset.grade);
+      if(g !== currentGrade) setGrade(g);
+    });
+  });
+  syncGradeButtons();
+
+  /* ---------------- voice settings panel ---------------- */
+  var voiceSettingsBtn = document.getElementById('voiceSettingsBtn');
+  var voiceSettings = document.getElementById('voiceSettings');
+  var azureKeyInput = document.getElementById('azureKeyInput');
+  var azureRegionInput = document.getElementById('azureRegionInput');
+  var azureVoiceSelect = document.getElementById('azureVoiceSelect');
+  var voiceStatus = document.getElementById('voiceStatus');
+
+  function updateVoiceStatus(){
+    voiceStatus.textContent = hasAzure()
+      ? 'Қосылды: нағыз қазақ дауысы («' + getAzureConfig().voice + '») қолданылады.'
+      : 'Кілт енгізілмеген — қазір браузердің қосалқы дауысы қолданылады.';
+  }
+  function loadAzureFormFromStorage(){
+    var cfg = getAzureConfig();
+    azureKeyInput.value = cfg.key;
+    azureRegionInput.value = cfg.region;
+    azureVoiceSelect.value = cfg.voice;
+    updateVoiceStatus();
+  }
+  voiceSettingsBtn.addEventListener('click', function(){
+    var willOpen = voiceSettings.hidden;
+    voiceSettings.hidden = !willOpen;
+    voiceSettingsBtn.setAttribute('aria-expanded', String(willOpen));
+    if(willOpen) loadAzureFormFromStorage();
+  });
+  document.getElementById('voiceSaveBtn').addEventListener('click', function(){
+    try{
+      localStorage.setItem(AZURE_KEY_STORAGE, azureKeyInput.value.trim());
+      localStorage.setItem(AZURE_REGION_STORAGE, azureRegionInput.value.trim());
+      localStorage.setItem(AZURE_VOICE_STORAGE, azureVoiceSelect.value);
+    }catch(e){}
+    updateVoiceStatus();
+  });
+  document.getElementById('voiceClearBtn').addEventListener('click', function(){
+    try{
+      localStorage.removeItem(AZURE_KEY_STORAGE);
+      localStorage.removeItem(AZURE_REGION_STORAGE);
+    }catch(e){}
+    azureKeyInput.value = '';
+    azureRegionInput.value = '';
+    updateVoiceStatus();
+  });
+  document.getElementById('voiceTestBtn').addEventListener('click', function(){
+    var testKey = azureKeyInput.value.trim();
+    var testRegion = azureRegionInput.value.trim();
+    var testVoice = azureVoiceSelect.value;
+    if(!testKey || !testRegion){
+      voiceStatus.textContent = 'Алдымен кілт пен аймақты енгізіңіз.';
+      return;
+    }
+    voiceStatus.textContent = 'Тексерілуде…';
+    var ssml = buildSsml(escapeSsml('Сәлем! Бұл — әженің дауысы.'), '-8%', testVoice);
+    playAzureSsml(ssml, {key:testKey, region:testRegion, voice:testVoice}).then(function(){
+      voiceStatus.textContent = 'Дауыс сәтті естілді! Растау үшін «Сақтау» түймесін бас.';
+    }).catch(function(err){
+      voiceStatus.textContent = 'Қате: кілт немесе аймақ дұрыс емес шығар («'+err.message+'»).';
+    });
+  });
+  loadAzureFormFromStorage();
+
+})();
+</script>
+</body>
+</html>
